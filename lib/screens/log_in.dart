@@ -1,8 +1,18 @@
+// ignore_for_file: no_logic_in_create_state
+
 import 'package:flutter/material.dart';
+import 'package:gallery_application/screens/products_list.dart';
 import 'package:gallery_application/screens/registration.dart';
+import 'package:gallery_application/providers/auth_provider.dart.dart';
+import 'package:provider/provider.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
+
+// @override
+//   State<LogInScreen> createState() {
+//     return _LogInScreenState();
+//   }
 
   @override
   _LogInScreenState createState() => _LogInScreenState();
@@ -11,8 +21,21 @@ class LogInScreen extends StatefulWidget {
 class _LogInScreenState extends State<LogInScreen> {
   final _formKey = GlobalKey<FormState>();
 
+  final TextEditingController _emailAddressController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   void _login() {
-    _formKey.currentState!.validate();
+    if (_formKey.currentState!.validate()) {
+      final myProvider = Provider.of<AuthProvider>(context, listen: false);
+      if (myProvider.loginUser(
+          _emailAddressController.text, _passwordController.text)) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (ctx) => const ProductsScreen(),
+          ),
+        );
+      }
+    }
   }
 
   @override
@@ -36,6 +59,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 height: 10,
               ),
               TextFormField(
+                controller: _emailAddressController,
                 decoration: InputDecoration(
                   label: const Text("Email"),
                   prefixIcon: const Icon(Icons.email_outlined),
@@ -58,6 +82,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 height: 10,
               ),
               TextFormField(
+                controller: _passwordController,
                 decoration: InputDecoration(
                   label: const Text("Password"),
                   prefixIcon: const Icon(Icons.password_outlined),

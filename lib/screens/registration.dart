@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gallery_application/providers/auth_provider.dart.dart';
 import 'package:gallery_application/screens/log_in.dart';
+import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -11,26 +13,37 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _emailAddressController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _emailAddressController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   void _register() {
-    _formKey.currentState!.validate();
-
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   SnackBar(
-    //     width: 200,
-    //     backgroundColor: Theme.of(context).colorScheme.secondary,
-    //     shape: RoundedRectangleBorder(
-    //       borderRadius: BorderRadius.circular(10),
-    //     ),
-    //     behavior: SnackBarBehavior.floating,
-    //     content: const Text("Registered Successfully"),
-    //   ),
-    // );
+    if (_formKey.currentState!.validate()) {
+      final myProvider = Provider.of<AuthProvider>(context, listen: false);
+      myProvider.registerUser(
+        _emailAddressController.text,
+        _passwordController.text,
+        _nameController.text,
+        _phoneNumberController.text,
+      );
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        width: 200,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        behavior: SnackBarBehavior.floating,
+        content: const Text("Registered Successfully"),
+      ),
+    );
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => const LogInScreen(),
+      ),
+    );
   }
 
   @override
@@ -54,9 +67,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
-                  controller: _firstNameController,
+                  controller: _nameController,
                   decoration: InputDecoration(
-                    label: const Text("First Name"),
+                    label: const Text("Full Name"),
                     prefixIcon: const Icon(Icons.person),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -68,28 +81,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   keyboardType: TextInputType.name,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "First Name is Required";
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 10),
-                TextFormField(
-                  controller: _lastNameController,
-                  decoration: InputDecoration(
-                    label: const Text("Last Name"),
-                    prefixIcon: const Icon(Icons.person),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  keyboardType: TextInputType.name,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Last Name is Required";
+                      return "Full Name is Required";
                     }
                     return null;
                   },
