@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gallery_application/models/product_item.dart';
+import 'package:gallery_application/providers/product_provider.dart';
+import 'package:gallery_application/widgets/product_items.dart';
+import 'package:provider/provider.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key});
@@ -11,8 +15,17 @@ class _ProductsScreenState extends State<ProductsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Our Products"),
+      body: Consumer<ProductProvider>(
+        builder: (context, productProvider, child) {
+          List<ProductItem> products = productProvider.products;
+          return ListView.builder(
+            itemCount: products.length,
+            itemBuilder: (context, index) {
+              ProductItem product = products[index];
+              return ProductItems(product: product);
+            },
+          );
+        },
       ),
     );
   }

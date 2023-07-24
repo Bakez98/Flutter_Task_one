@@ -1,9 +1,9 @@
 // ignore_for_file: no_logic_in_create_state
 
 import 'package:flutter/material.dart';
-import 'package:gallery_application/screens/products_list.dart';
 import 'package:gallery_application/screens/registration.dart';
 import 'package:gallery_application/providers/auth_provider.dart.dart';
+import 'package:gallery_application/screens/tabs.dart';
 import 'package:provider/provider.dart';
 
 class LogInScreen extends StatefulWidget {
@@ -29,9 +29,9 @@ class _LogInScreenState extends State<LogInScreen> {
       final myProvider = Provider.of<AuthProvider>(context, listen: false);
       if (myProvider.loginUser(
           _emailAddressController.text, _passwordController.text)) {
-        Navigator.of(context).push(
+        Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (ctx) => const ProductsScreen(),
+            builder: (ctx) => const TabsScreen(),
           ),
         );
       }
@@ -123,7 +123,7 @@ class _LogInScreenState extends State<LogInScreen> {
                     width: 5,
                   ),
                   TextButton(
-                    onPressed: () => Navigator.push(
+                    onPressed: () => Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const RegistrationScreen(),

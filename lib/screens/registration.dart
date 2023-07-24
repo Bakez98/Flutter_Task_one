@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gallery_application/providers/auth_provider.dart.dart';
 import 'package:gallery_application/screens/log_in.dart';
+import 'package:gallery_application/providers/auth_provider.dart.dart';
 import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -169,7 +169,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       width: 5,
                     ),
                     TextButton(
-                      onPressed: () => Navigator.push(
+                      onPressed: () => Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const LogInScreen(),

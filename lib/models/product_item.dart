@@ -8,6 +8,6 @@ class ProductItem {
 
   final String id;
   final String productName;
-  final int productPrice;
+  final double productPrice;
   final int productQuantity;
 }
