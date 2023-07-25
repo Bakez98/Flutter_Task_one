@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gallery_application/screens/log_in.dart';
 import 'package:gallery_application/providers/auth_provider.dart.dart';
 import 'package:provider/provider.dart';
@@ -27,23 +28,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         _nameController.text,
         _phoneNumberController.text,
       );
-    }
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        width: 200,
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          width: 200,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          behavior: SnackBarBehavior.floating,
+          content: const Text("Registered Successfully"),
         ),
-        behavior: SnackBarBehavior.floating,
-        content: const Text("Registered Successfully"),
-      ),
-    );
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => const LogInScreen(),
-      ),
-    );
+      );
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => const LogInScreen(),
+        ),
+      );
+    }
   }
 
   @override
@@ -79,6 +80,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                   ),
                   keyboardType: TextInputType.name,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                      RegExp(r'[a-zA-Z\s]'),
+                    ),
+                  ],
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "Full Name is Required";
@@ -100,11 +106,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                   ),
                   keyboardType: TextInputType.emailAddress,
+                  // inputFormatters: [
+                  //   FilteringTextInputFormatter.allow(
+                  //       RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')),
+                  // ],
                   validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Email is Required";
+                    RegExp emailRegex =
+                        RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+                    if (value == null ||
+                        value.isEmpty ||
+                        !emailRegex.hasMatch(value)) {
+                      return 'Please enter an email';
                     }
-                    return null;
+                    if (!emailRegex.hasMatch(value)) {
+                      return 'Please enter a valid email';
+                    }
                   },
                 ),
                 const SizedBox(height: 10),
@@ -121,6 +138,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                   ),
                   keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "Phone Number is Required";

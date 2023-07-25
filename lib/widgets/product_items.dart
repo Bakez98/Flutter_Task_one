@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gallery_application/models/product_item.dart';
 import 'package:gallery_application/providers/basket_provider.dart';
+import 'package:gallery_application/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProductItems extends StatelessWidget {
@@ -8,16 +9,37 @@ class ProductItems extends StatelessWidget {
 
   final ProductItem product;
 
+  void _addToBasket(context) {
+    final myProvider = Provider.of<BasketProvider>(context, listen: false);
+    if (product.productQuantity > 0) {
+      myProvider.addProductToBasket(product.id, product.productName,
+          product.productPrice, product.productQuantity);
+      Provider.of<ProductProvider>(context, listen: false)
+          .reduceQuantity(product);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          width: 200,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          behavior: SnackBarBehavior.floating,
+          content: const Text("Not Enough Product Quantity!"),
+        ),
+      );
+    }
+    // Provider.of<ProductProvider>(context, listen: false)
+    //     .products
+    //     .where((e) => e.id == product.id)
+    //     .first
+    //     .productQuantity--;
+
+    print("Product add to basket");
+  }
+
   @override
   Widget build(BuildContext context) {
-    
-    
-    void _addToBasket() {
-      final myProvider = Provider.of<BasketProvider>(context, listen: false);
-      myProvider.addProductToBasket(product);
-      print("Product add to basket");
-    }
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Card(
@@ -26,7 +48,7 @@ class ProductItems extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           side: const BorderSide(color: Colors.grey, width: 1),
         ),
-        color: Colors.cyanAccent, // You can change this to any color you want
+        color: Colors.cyanAccent,
 
         child: ListTile(
           title: Text(product.productName),
@@ -37,15 +59,18 @@ class ProductItems extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               IconButton(
-                icon: const Icon(Icons.remove),
-                onPressed: () {
-                  _addToBasket();
-                  print("Product add to basket");
-                },
+                icon: const Icon(
+                  Icons.delete_forever_sharp,
+                  color: Colors.red,
+                ),
+                onPressed: () {},
               ),
               IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () {},
+                icon: const Icon(Icons.add_shopping_cart),
+                onPressed: () {
+                  _addToBasket(context);
+                  print("Product add to basket");
+                },
               ),
             ],
           ),

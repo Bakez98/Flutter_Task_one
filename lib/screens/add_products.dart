@@ -53,7 +53,8 @@ class AddProducts extends StatelessWidget {
                 controller: _productNameController,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
-                      RegExp(r'[a-zA-Z]')), // Only allow letters
+                    RegExp(r'[a-zA-Z]'),
+                  ),
                 ],
                 decoration: const InputDecoration(labelText: 'Product Name'),
                 validator: (value) {

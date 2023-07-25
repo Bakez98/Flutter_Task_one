@@ -6,7 +6,8 @@ class ProductProvider extends ChangeNotifier {
 
   List<ProductItem> get products => _products;
 
-  void addProduct(String productName, double productPrice, int productQuantity) {
+  void addProduct(
+      String productName, double productPrice, int productQuantity) {
     final newId = _products.length + 1;
     final newItem = ProductItem(
         id: newId.toString(),
@@ -35,6 +36,21 @@ class ProductProvider extends ChangeNotifier {
     } else {
       //do nothiing if item allready in the products list
     }
+    notifyListeners();
+  }
+
+  void reduceQuantity(ProductItem productItem) {
+    var isExist = false;
+    _products.forEach((e) {
+      if (e.id == productItem.id) {
+        isExist = true;
+      }
+    });
+
+    if (isExist) {
+      _products.where((e) => e.id == productItem.id).first.productQuantity--;
+    }
+
     notifyListeners();
   }
 }

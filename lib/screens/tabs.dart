@@ -4,6 +4,7 @@ import 'package:gallery_application/screens/add_products.dart';
 import 'package:gallery_application/screens/log_in.dart';
 import 'package:gallery_application/screens/products_basket.dart';
 import 'package:gallery_application/screens/products_list.dart';
+import 'package:gallery_application/widgets/drawer.dart';
 import 'package:provider/provider.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -45,6 +46,9 @@ class _TabsScreenState extends State<TabsScreen> {
     }
 
     return Scaffold(
+      drawer: const MainDrawer(
+          // onSelectScreen: _setScreen,
+          ),
       appBar: AppBar(
         actions: [
           IconButton(

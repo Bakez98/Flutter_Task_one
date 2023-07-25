@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gallery_application/models/basket_model.dart';
 import 'package:gallery_application/models/product_item.dart';
 import 'package:gallery_application/providers/basket_provider.dart';
+import 'package:gallery_application/widgets/basket_items.dart';
 import 'package:provider/provider.dart';
 
 class ProductsBasket extends StatefulWidget {
@@ -14,13 +16,14 @@ class _ProductsBasketState extends State<ProductsBasket> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    body: Consumer<BasketProvider>(
+      body: Consumer<BasketProvider>(
         builder: (context, basketProvider, child) {
-          List<ProductItem> basket = basketProvider.basket;
+          List<BaskettItem> basket = basketProvider.basket;
+          print("my list = ${basket}");
           return ListView.builder(
             itemCount: basket.length,
             itemBuilder: (context, index) {
-
+              return BasketItems(item: basket[index]);
             },
           );
         },
@@ -28,4 +31,3 @@ class _ProductsBasketState extends State<ProductsBasket> {
     );
   }
 }
-
