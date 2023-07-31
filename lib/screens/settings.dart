@@ -18,31 +18,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: Text(cont.language["settings"]),
       ),
       body: Consumer<SettingsProvider>(builder: (context, st, ch) {
-        return ListView(
-          children: [
-            ListTile(
-              title: Text(cont.language["applicationTheme"]),
-              trailing: Switch(
-                value: st.isDarkThemeEnabled,
-                onChanged: (value) {
-                  //  Provider.of<SettingsProvider>(context, listen: false)
-                  st.setDarkThemeEnabled(value);
-                },
+        return Directionality(
+          textDirection: st.isArabicLanguageSelected
+              ? TextDirection.rtl
+              : TextDirection.ltr,
+          child: ListView(
+            children: [
+              ListTile(
+                title: Text(cont.language["applicationTheme"]),
+                trailing: Switch(
+                  value: st.isDarkThemeEnabled,
+                  onChanged: (value) {
+                    //  Provider.of<SettingsProvider>(context, listen: false)
+                    st.setDarkThemeEnabled(value);
+                  },
+                ),
+                subtitle: Text(st.isDarkThemeEnabled ? 'Dark' : 'Light'),
               ),
-              subtitle: Text(st.isDarkThemeEnabled ? 'Dark' : 'Light'),
-            ),
-            ListTile(
-              title: Text(cont.language["applicationlanguage"]),
-              trailing: Switch(
-                value: st.isArabicLanguageSelected,
-                onChanged: (value) {
-                  st.setArabicLanguageSelected(value);
-                },
+              ListTile(
+                title: Text(cont.language["applicationlanguage"]),
+                trailing: Switch(
+                  value: st.isArabicLanguageSelected,
+                  onChanged: (value) {
+                    st.setArabicLanguageSelected(value);
+                  },
+                ),
+                subtitle:
+                    Text(st.isArabicLanguageSelected ? 'العربيه' : 'English'),
               ),
-              subtitle:
-                  Text(st.isArabicLanguageSelected ? 'العربيه' : 'English'),
-            ),
-          ],
+            ],
+          ),
         );
       }),
     );

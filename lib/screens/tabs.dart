@@ -71,7 +71,8 @@ class _TabsScreenState extends State<TabsScreen> {
       // drawer: MainDrawer(
       //   onSelectScreen: _setScreen,
       // ),
-      body: activePage,
+      body: 
+      activePage,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
         currentIndex: _selectedPageIndex,
