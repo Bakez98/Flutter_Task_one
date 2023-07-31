@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gallery_application/providers/settings_provider.dart';
 import 'package:gallery_application/screens/log_in.dart';
 import 'package:gallery_application/providers/auth_provider.dart.dart';
 import 'package:provider/provider.dart';
@@ -49,9 +50,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var cont = context.watch<SettingsProvider>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Registration'),
+        title: Text(""),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -62,15 +64,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 100),
-                const Text(
-                  "Create Your Account",
+                Text(
+                  cont.language["create_account"],
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
                   controller: _nameController,
                   decoration: InputDecoration(
-                    label: const Text("Full Name"),
+                    label: Text(cont.language["full_name"]),
                     prefixIcon: const Icon(Icons.person),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -96,7 +98,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 TextFormField(
                   controller: _emailAddressController,
                   decoration: InputDecoration(
-                    label: const Text("Email Adress"),
+                    label: Text(cont.language["email_adress"]),
                     prefixIcon: const Icon(Icons.email),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -128,7 +130,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 TextFormField(
                   controller: _phoneNumberController,
                   decoration: InputDecoration(
-                    label: const Text("Phone Number"),
+                    label: Text(cont.language["phone_number"]),
                     prefixIcon: const Icon(Icons.numbers),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -150,7 +152,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 TextFormField(
                   controller: _passwordController,
                   decoration: InputDecoration(
-                    label: const Text("Passowrd"),
+                    label: Text(cont.language["password"]),
                     prefixIcon: const Icon(Icons.password),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -170,11 +172,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: _register,
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Register'),
-                      Icon(Icons.app_registration),
+                      Text(cont.language["register"]),
+                      const Icon(Icons.app_registration),
                     ],
                   ),
                 ),
@@ -182,7 +184,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Allready Have an Account ?"),
+                    Text(cont.language["already_have_account"]),
                     const SizedBox(
                       width: 5,
                     ),
@@ -193,7 +195,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           builder: (context) => const LogInScreen(),
                         ),
                       ),
-                      child: const Text("Sign in!"),
+                      child: Text(cont.language["sign_in"]),
                     ),
                   ],
                 )

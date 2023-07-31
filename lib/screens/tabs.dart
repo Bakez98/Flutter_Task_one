@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gallery_application/main.dart';
 import 'package:gallery_application/providers/auth_provider.dart.dart';
+import 'package:gallery_application/providers/settings_provider.dart';
 import 'package:gallery_application/screens/add_products.dart';
 import 'package:gallery_application/screens/log_in.dart';
 import 'package:gallery_application/screens/products_basket.dart';
@@ -37,12 +39,13 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var cont = context.watch<SettingsProvider>();
     Widget activePage = const ProductsScreen();
-    var activePageTitle = 'Our Products';
+    var activePageTitle = cont.language["our_products"];
 
     if (_selectedPageIndex == 1) {
       activePage = const ProductsBasket();
-      activePageTitle = 'Your Basket';
+      activePageTitle = "Your Basket";
     }
 
     return Scaffold(
@@ -72,14 +75,20 @@ class _TabsScreenState extends State<TabsScreen> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
         currentIndex: _selectedPageIndex,
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Products',
+            icon: Icon(
+              Icons.list,
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+            label: cont.language["products"],
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_basket),
-            label: 'Basket',
+            icon: Icon(
+              Icons.shopping_basket,
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+            label: cont.language["basket"],
           ),
         ],
       ),

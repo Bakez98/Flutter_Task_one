@@ -1,6 +1,7 @@
 // ignore_for_file: no_logic_in_create_state
 
 import 'package:flutter/material.dart';
+import 'package:gallery_application/providers/settings_provider.dart';
 import 'package:gallery_application/screens/registration.dart';
 import 'package:gallery_application/providers/auth_provider.dart.dart';
 import 'package:gallery_application/screens/tabs.dart';
@@ -19,6 +20,7 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreenState extends State<LogInScreen> {
+  bool passenable = true;
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _emailAddressController = TextEditingController();
@@ -40,9 +42,11 @@ class _LogInScreenState extends State<LogInScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var cont = context.watch<SettingsProvider>();
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Log in"),
+        title: Text(cont.language["login"].toString()),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -51,9 +55,10 @@ class _LogInScreenState extends State<LogInScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                "Login To Your Account",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              Text(
+                cont.language["login_to_your_account"].toString(),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
               ),
               const SizedBox(
                 height: 10,
@@ -61,7 +66,7 @@ class _LogInScreenState extends State<LogInScreen> {
               TextFormField(
                 controller: _emailAddressController,
                 decoration: InputDecoration(
-                  label: const Text("Email"),
+                  label: Text(cont.language["eml"].toString()),
                   prefixIcon: const Icon(Icons.email_outlined),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -83,9 +88,24 @@ class _LogInScreenState extends State<LogInScreen> {
               ),
               TextFormField(
                 controller: _passwordController,
+                obscureText: passenable,
                 decoration: InputDecoration(
-                  label: const Text("Password"),
+                  label: Text(cont.language["password"].toString()),
                   prefixIcon: const Icon(Icons.password_outlined),
+                  suffix: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        if (passenable) {
+                          passenable = false;
+                        } else {
+                          passenable = true;
+                        }
+                      });
+                    },
+                    icon: Icon(passenable == true
+                        ? Icons.visibility
+                        : Icons.visibility_off),
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -106,10 +126,10 @@ class _LogInScreenState extends State<LogInScreen> {
               ),
               ElevatedButton(
                 onPressed: _login,
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Login'),
+                    Text(cont.language["login"].toString()),
                     Icon(Icons.login_outlined),
                   ],
                 ),
@@ -118,7 +138,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Dont Have an Account ?"),
+                  Text(cont.language["dont_have_account"].toString()),
                   const SizedBox(
                     width: 5,
                   ),
@@ -129,7 +149,7 @@ class _LogInScreenState extends State<LogInScreen> {
                         builder: (context) => const RegistrationScreen(),
                       ),
                     ),
-                    child: const Text("Sign Up!"),
+                    child: Text(cont.language["sign_up"].toString()),
                   ),
                 ],
               )

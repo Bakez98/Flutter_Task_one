@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gallery_application/providers/settings_provider.dart';
+import 'package:gallery_application/screens/settings.dart';
+import 'package:provider/provider.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({
@@ -9,11 +12,11 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var cont = context.watch<SettingsProvider>();
     return Drawer(
       child: Column(
         children: [
           DrawerHeader(
-            
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -32,7 +35,7 @@ class MainDrawer extends StatelessWidget {
               children: [
                 const SizedBox(width: 16),
                 Text(
-                  'Settings',
+                  cont.language["settings"],
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: Colors.black,
                       ),
@@ -41,33 +44,25 @@ class MainDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(
-              Icons.language_rounded,
-              size: 26,
-              color: Colors.black,
-            ),
-            title: Text(
-              'Change Language',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    fontSize: 24,
-                  ),
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.settings,
               size: 26,
               color: Colors.black,
             ),
             title: Text(
-              'Application Theme',
+              cont.language["app_settings"],
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     color: Colors.black,
                     fontSize: 24,
                   ),
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (ctx) => SettingsScreen(),
+                ),
+              );
+            },
           ),
         ],
       ),
