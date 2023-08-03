@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gallery_application/models/basket_model.dart';
+import 'package:gallery_application/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 class BasketProvider extends ChangeNotifier {
   final List<BaskettItem> _basket = [];
@@ -29,6 +31,23 @@ class BasketProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool increaseQuantity(BaskettItem item, context) {
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
+
+    final myItem = productProvider.products
+        .where((element) => element.productName == item.productName)
+        .first;
+    if (myItem.productQuantity > 0) {
+      myItem.productQuantity--;
+      item.productQuantity++;
+      notifyListeners();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   // void increaseQuantity(BaskettItem item) {
   //   var isExist = false;
   //   _basket.forEach((e) {
@@ -46,7 +65,9 @@ class BasketProvider extends ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void removeFromBasket(BaskettItem item){
+  void removeFromBasket(BaskettItem item, context) {
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
     var isExist = false;
     _basket.forEach((e) {
       if (e.id == item.id) {
@@ -54,10 +75,12 @@ class BasketProvider extends ChangeNotifier {
       }
     });
     if (isExist) {
+      productProvider.products
+          .where((element) => element.productName == item.productName)
+          .first
+          .productQuantity += item.productQuantity;
       _basket.removeWhere((element) => element.id == item.id);
-    } else {
-      
-    }
+    } else {}
 
     notifyListeners();
   }

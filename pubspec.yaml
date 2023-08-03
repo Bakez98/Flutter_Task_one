@@ -62,6 +62,10 @@ flutter:
   assets:
     - assets/lang/ar.json
     - assets/lang/en.json
+    - assets/images/noproduct1.png
+    - assets/images/xbox.jpg
+    - assets/images/basket.png
+    - assets/images/empty-cart.png
 
   #   - images/a_dot_ham.jpeg
 

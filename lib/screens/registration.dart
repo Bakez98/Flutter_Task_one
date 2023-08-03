@@ -160,6 +160,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         const SizedBox(height: 10),
                         TextFormField(
                           controller: _passwordController,
+                          obscureText: true,
                           decoration: InputDecoration(
                             label: Text(cont.language["password"]),
                             prefixIcon: const Icon(Icons.password),

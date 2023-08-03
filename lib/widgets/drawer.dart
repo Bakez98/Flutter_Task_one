@@ -19,17 +19,9 @@ class MainDrawer extends StatelessWidget {
           DrawerHeader(
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Theme.of(context).colorScheme.primaryContainer,
-                  Theme.of(context)
-                      .colorScheme
-                      .primaryContainer
-                      .withOpacity(0.8),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              color: Theme.of(context).brightness == Brightness.light
+                  ? Colors.indigo
+                  : Colors.teal[900],
             ),
             child: Row(
               children: [
@@ -37,7 +29,9 @@ class MainDrawer extends StatelessWidget {
                 Text(
                   cont.language["settings"],
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: Colors.black,
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? Colors.black
+                            : Colors.white,
                       ),
                 ),
               ],

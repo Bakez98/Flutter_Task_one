@@ -20,7 +20,6 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreenState extends State<LogInScreen> {
-  bool passenable = true;
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _emailAddressController = TextEditingController();
@@ -34,6 +33,42 @@ class _LogInScreenState extends State<LogInScreen> {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (ctx) => const TabsScreen(),
+          ),
+        );
+      } else if (myProvider.passwordNotCorrect) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            width: 200,
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            behavior: SnackBarBehavior.floating,
+            content: const Text("Entered Password is Wrong !"),
+          ),
+        );
+      } else if (myProvider.userNotCorrect) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            width: 200,
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            behavior: SnackBarBehavior.floating,
+            content: const Text("Entered UserName Is Wrong"),
+          ),
+        );
+      } else if (myProvider.userNotCorrect && myProvider.passwordNotCorrect) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            width: 200,
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            behavior: SnackBarBehavior.floating,
+            content: const Text("Entered UserName and Password Is Wrong"),
           ),
         );
       }
@@ -94,24 +129,10 @@ class _LogInScreenState extends State<LogInScreen> {
                       ),
                       TextFormField(
                         controller: _passwordController,
-                        obscureText: passenable,
+                        obscureText: true,
                         decoration: InputDecoration(
                           label: Text(cont.language["password"].toString()),
                           prefixIcon: const Icon(Icons.password_outlined),
-                          suffix: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                if (passenable) {
-                                  passenable = false;
-                                } else {
-                                  passenable = true;
-                                }
-                              });
-                            },
-                            icon: Icon(passenable == true
-                                ? Icons.visibility
-                                : Icons.visibility_off),
-                          ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),

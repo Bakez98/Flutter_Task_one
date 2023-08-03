@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:gallery_application/models/user.dart';
 
 class AuthProvider extends ChangeNotifier {
-  
   User? _user;
 
   User? get user => _user;
+
+  bool userNotCorrect = false;
+  bool passwordNotCorrect = false;
 
   //to register a new user
   void registerUser(
@@ -20,8 +22,13 @@ class AuthProvider extends ChangeNotifier {
   bool loginUser(String email, String password) {
     if (email == _user!.email && password == _user!.password) {
       return true;
+    } else if (email != _user!.email && password == _user!.password) {
+      userNotCorrect = true;
+      return false;
+    } else if (email == _user!.email && password != _user!.password) {
+      passwordNotCorrect = true;
+      return false;
     } else {
-      // _user = null;
       return false;
     }
   }

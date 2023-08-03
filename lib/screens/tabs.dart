@@ -54,13 +54,14 @@ class _TabsScreenState extends State<TabsScreen> {
           ),
       appBar: AppBar(
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddProducts()));
-            },
-            icon: const Icon(Icons.add),
-          ),
+          if (_selectedPageIndex != 1)
+            IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AddProducts()));
+              },
+              icon: const Icon(Icons.add),
+            ),
           IconButton(
             onPressed: _logOut,
             icon: const Icon(Icons.logout_sharp),
@@ -71,8 +72,7 @@ class _TabsScreenState extends State<TabsScreen> {
       // drawer: MainDrawer(
       //   onSelectScreen: _setScreen,
       // ),
-      body: 
-      activePage,
+      body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
         currentIndex: _selectedPageIndex,
@@ -80,16 +80,18 @@ class _TabsScreenState extends State<TabsScreen> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.list,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.background,
             ),
             label: cont.language["products"],
+            backgroundColor: Theme.of(context).colorScheme.background,
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.shopping_basket,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.background,
             ),
             label: cont.language["basket"],
+            backgroundColor: Theme.of(context).colorScheme.background,
           ),
         ],
       ),

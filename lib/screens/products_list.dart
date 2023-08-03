@@ -18,13 +18,25 @@ class _ProductsScreenState extends State<ProductsScreen> {
       body: Consumer<ProductProvider>(
         builder: (context, productProvider, child) {
           List<ProductItem> products = productProvider.products;
-          return ListView.builder(
-            itemCount: products.length,
-            itemBuilder: (context, index) {
-              ProductItem product = products[index];
-              return ProductItems(product: product);
-            },
-          );
+
+          if (products.length <= 0) {
+            return Center(
+              child: Image.asset(
+                'assets/images/noproduct1.png',
+                height: 300,
+              ),
+            );
+          } else {
+            return Scrollbar(
+              child: ListView.builder(
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  ProductItem product = products[index];
+                  return ProductItems(product: product);
+                },
+              ),
+            );
+          }
         },
       ),
     );

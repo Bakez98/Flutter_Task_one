@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
       theme: Provider.of<SettingsProvider>(context).isDarkThemeEnabled
           ? dark
           : light,
-      home: const LogInScreen(),
+      home: const TabsScreen(),
     );
   }
 }

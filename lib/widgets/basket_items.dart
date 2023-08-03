@@ -8,6 +8,23 @@ class BasketItems extends StatelessWidget {
 
   final BaskettItem item;
 
+  void _increaseCount(context) {
+    final myProvider = Provider.of<BasketProvider>(context, listen: false);
+    if (!myProvider.increaseQuantity(item, context)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          width: 200,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          behavior: SnackBarBehavior.floating,
+          content: const Text("Not Enough Product Quantity!"),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -18,7 +35,8 @@ class BasketItems extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           side: const BorderSide(color: Colors.grey, width: 1),
         ),
-        color: Colors.cyanAccent, // You can change this to any color you want
+        color: Theme.of(context)
+            .cardColor, // You can change this to any color you want
 
         child: ListTile(
           title: Text(item.productName),
@@ -43,11 +61,18 @@ class BasketItems extends StatelessWidget {
               IconButton(
                   onPressed: () {
                     Provider.of<BasketProvider>(context, listen: false)
-                        .removeFromBasket(item);
+                        .removeFromBasket(item, context);
                   },
                   icon: const Icon(
                     Icons.delete_forever_sharp,
                     color: Colors.red,
+                  )),
+              IconButton(
+                  onPressed: () {
+                    _increaseCount(context);
+                  },
+                  icon: const Icon(
+                    Icons.add,
                   ))
             ],
           ),

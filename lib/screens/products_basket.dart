@@ -16,18 +16,24 @@ class _ProductsBasketState extends State<ProductsBasket> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<BasketProvider>(
-        builder: (context, basketProvider, child) {
-          List<BaskettItem> basket = basketProvider.basket;
-          print("my list = ${basket}");
+      body: Consumer<BasketProvider>(builder: (context, basketProvider, child) {
+        List<BaskettItem> basket = basketProvider.basket;
+        if (basket.isEmpty) {
+          return Center(
+            child: Image.asset(
+              'assets/images/empty-cart.png',
+              height: 300,
+            ),
+          );
+        } else {
           return ListView.builder(
             itemCount: basket.length,
             itemBuilder: (context, index) {
               return BasketItems(item: basket[index]);
             },
           );
-        },
-      ),
+        }
+      }),
     );
   }
 }
