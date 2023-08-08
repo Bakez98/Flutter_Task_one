@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'dart:io' as plt;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsProvider extends ChangeNotifier {
   Map<String, dynamic> language = {};
+
   Locale my_current_locale = Locale("en");
 
   bool _isDarkThemeEnabled = false;
@@ -18,6 +19,17 @@ class SettingsProvider extends ChangeNotifier {
     _isDarkThemeEnabled = value;
     notifyListeners();
   }
+// SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  // Future<void> setTheme(String theme) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.setBool('_isDarkThemeEnabled', true);
+  // }
+
+  // Future<bool?> getTheme() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   return prefs.getBool('_isDarkThemeEnabled');
+  // }
 
   void setArabicLanguageSelected(bool value) async {
     _isArabicLanguageSelected = value;

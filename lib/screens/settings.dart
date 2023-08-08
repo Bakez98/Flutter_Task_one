@@ -15,9 +15,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
     var cont = context.watch<SettingsProvider>();
     return Scaffold(
       appBar: AppBar(
-        title: Text(cont.language["settings"]),
+        title: Directionality(
+            textDirection: cont.isArabicLanguageSelected
+                ? TextDirection.rtl
+                : TextDirection.ltr,
+            child: Text(cont.language["settings"])),
       ),
       body: Consumer<SettingsProvider>(builder: (context, st, ch) {
+        // final locale = Localizations.localeOf(context);
+
         return Directionality(
           textDirection: st.isArabicLanguageSelected
               ? TextDirection.rtl

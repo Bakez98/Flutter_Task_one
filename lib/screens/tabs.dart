@@ -45,55 +45,59 @@ class _TabsScreenState extends State<TabsScreen> {
 
     if (_selectedPageIndex == 1) {
       activePage = const ProductsBasket();
-      activePageTitle = "Your Basket";
+      activePageTitle = cont.language["yourbasket"];
     }
 
-    return Scaffold(
-      drawer: const MainDrawer(
-          // onSelectScreen: _setScreen,
-          ),
-      appBar: AppBar(
-        actions: [
-          if (_selectedPageIndex != 1)
+    return Directionality(
+      textDirection:
+          cont.isArabicLanguageSelected ? TextDirection.rtl : TextDirection.ltr,
+      child: Scaffold(
+        drawer: const MainDrawer(
+            // onSelectScreen: _setScreen,
+            ),
+        appBar: AppBar(
+          actions: [
+            if (_selectedPageIndex != 1)
+              IconButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AddProducts()));
+                },
+                icon: const Icon(Icons.add),
+              ),
             IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AddProducts()));
-              },
-              icon: const Icon(Icons.add),
+              onPressed: _logOut,
+              icon: const Icon(Icons.logout_sharp),
             ),
-          IconButton(
-            onPressed: _logOut,
-            icon: const Icon(Icons.logout_sharp),
-          ),
-        ],
-        title: Text(activePageTitle),
-      ),
-      // drawer: MainDrawer(
-      //   onSelectScreen: _setScreen,
-      // ),
-      body: activePage,
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _selectPage,
-        currentIndex: _selectedPageIndex,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.list,
-              color: Theme.of(context).colorScheme.background,
+          ],
+          title: Text(activePageTitle),
+        ),
+        // drawer: MainDrawer(
+        //   onSelectScreen: _setScreen,
+        // ),
+        body: activePage,
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: _selectPage,
+          currentIndex: _selectedPageIndex,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.list,
+                color: Theme.of(context).colorScheme.background,
+              ),
+              label: cont.language["products"],
+              backgroundColor: Theme.of(context).colorScheme.background,
             ),
-            label: cont.language["products"],
-            backgroundColor: Theme.of(context).colorScheme.background,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.shopping_basket,
-              color: Theme.of(context).colorScheme.background,
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.shopping_basket,
+                color: Theme.of(context).colorScheme.background,
+              ),
+              label: cont.language["basket"],
+              backgroundColor: Theme.of(context).colorScheme.background,
             ),
-            label: cont.language["basket"],
-            backgroundColor: Theme.of(context).colorScheme.background,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

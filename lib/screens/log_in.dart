@@ -79,114 +79,118 @@ class _LogInScreenState extends State<LogInScreen> {
   Widget build(BuildContext context) {
     var cont = context.watch<SettingsProvider>();
 
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(cont.language["login"].toString()),
-        ),
-        body: Consumer<SettingsProvider>(
-          builder: (context, st, ch) {
-            return Directionality(
-              textDirection: st.isArabicLanguageSelected
-                  ? TextDirection.rtl
-                  : TextDirection.ltr,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        cont.language["login_to_your_account"].toString(),
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 25),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        controller: _emailAddressController,
-                        decoration: InputDecoration(
-                          label: Text(cont.language["eml"].toString()),
-                          prefixIcon: const Icon(Icons.email_outlined),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+    return Directionality(
+      textDirection:
+          cont.isArabicLanguageSelected ? TextDirection.rtl : TextDirection.ltr,
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text(cont.language["login"].toString()),
+          ),
+          body: Consumer<SettingsProvider>(
+            builder: (context, st, ch) {
+              return Directionality(
+                textDirection: st.isArabicLanguageSelected
+                    ? TextDirection.rtl
+                    : TextDirection.ltr,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          cont.language["login_to_your_account"].toString(),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 25),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextFormField(
+                          controller: _emailAddressController,
+                          decoration: InputDecoration(
+                            label: Text(cont.language["eml"].toString()),
+                            prefixIcon: const Icon(Icons.email_outlined),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                          keyboardType: TextInputType.name,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Email Address is Required!";
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        TextFormField(
+                          controller: _passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            label: Text(cont.language["password"].toString()),
+                            prefixIcon: const Icon(Icons.password_outlined),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          keyboardType: TextInputType.visiblePassword,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Password is Required!";
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        ElevatedButton(
+                          onPressed: _login,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(cont.language["login"].toString()),
+                              Icon(Icons.login_outlined),
+                            ],
                           ),
                         ),
-                        keyboardType: TextInputType.name,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Email Address is Required!";
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        controller: _passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          label: Text(cont.language["password"].toString()),
-                          prefixIcon: const Icon(Icons.password_outlined),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        keyboardType: TextInputType.visiblePassword,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return "Password is Required!";
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      ElevatedButton(
-                        onPressed: _login,
-                        child: Row(
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(cont.language["login"].toString()),
-                            Icon(Icons.login_outlined),
-                          ],
-                        ),
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(cont.language["dont_have_account"].toString()),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          TextButton(
-                            onPressed: () => Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const RegistrationScreen(),
-                              ),
+                            Text(cont.language["dont_have_account"].toString()),
+                            const SizedBox(
+                              width: 5,
                             ),
-                            child: Text(cont.language["sign_up"].toString()),
-                          ),
-                        ],
-                      )
-                    ],
+                            TextButton(
+                              onPressed: () => Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const RegistrationScreen(),
+                                ),
+                              ),
+                              child: Text(cont.language["sign_up"].toString()),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
-        ));
+              );
+            },
+          )),
+    );
   }
 }

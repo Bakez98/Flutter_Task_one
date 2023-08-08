@@ -15,6 +15,8 @@ class ProductsBasket extends StatefulWidget {
 class _ProductsBasketState extends State<ProductsBasket> {
   @override
   Widget build(BuildContext context) {
+    final basketLength =
+        Provider.of<BasketProvider>(context, listen: false).basket.length;
     return Scaffold(
       body: Consumer<BasketProvider>(builder: (context, basketProvider, child) {
         List<BaskettItem> basket = basketProvider.basket;
@@ -34,6 +36,15 @@ class _ProductsBasketState extends State<ProductsBasket> {
           );
         }
       }),
+      bottomNavigationBar: Container(
+          padding: EdgeInsets.all(12),
+          height: 50.0,
+          // color: Theme.of(context).colorScheme.background,
+          child: Center(
+            child: basketLength > 0
+                ? Text("You Have ${basketLength.toString()} in Your Basket")
+                : const Text(""),
+          )),
     );
   }
 }

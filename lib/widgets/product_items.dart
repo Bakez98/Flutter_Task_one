@@ -81,19 +81,19 @@ class ProductItems extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.remove),
+                    icon: const Icon(Icons.remove),
                     onPressed: () {
                       _RemoveFromBasket(context);
                     },
                   ),
                   IconButton(
-                    icon: Icon(Icons.add),
+                    icon: const Icon(Icons.add),
                     onPressed: () {
                       _addToBasket(context);
                     },
                   ),
                   ElevatedButton(
-                    child: Text("Add to Basket"),
+                    child: const Text("Add to Basket"),
                     onPressed: () {
                       _addToBasket(context);
                     },

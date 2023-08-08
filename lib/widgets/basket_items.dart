@@ -41,7 +41,7 @@ class BasketItems extends StatelessWidget {
         child: ListTile(
           title: Text(item.productName),
           subtitle: Text(
-            'Price: ${item.productPrice} \$ , Quantity: ${item.productQuantity}',
+            'Total Price: ${item.productPrice * item.productQuantity} \$ , Quantity: ${item.productQuantity}',
           ),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,

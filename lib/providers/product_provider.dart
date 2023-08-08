@@ -8,7 +8,7 @@ class ProductProvider extends ChangeNotifier {
 
   List<ProductItem> get products => _products;
 
-  void addProduct(
+  bool addProduct(
       String productName, double productPrice, int productQuantity) {
     final newId = _products.length + 1;
     final newItem = ProductItem(
@@ -19,15 +19,22 @@ class ProductProvider extends ChangeNotifier {
 
     var isExist = false;
     _products.forEach((e) {
-      if (e.productName == productName) {
+      if (e.productName.toLowerCase() == productName.toLowerCase()) {
+        e.productQuantity = e.productQuantity + productQuantity;
+        e.productPrice = productPrice;
         isExist = true;
       }
     });
+    if (isExist) {
+      notifyListeners();
+      return true;
+    }
     if (!isExist) {
       _products.add(newItem);
-    } else {}
+      notifyListeners();
+    }
 
-    notifyListeners();
+    return false;
   }
 
   void removeProduct(ProductItem productItem) {
