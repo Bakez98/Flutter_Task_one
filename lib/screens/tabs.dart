@@ -70,7 +70,7 @@ class _TabsScreenState extends State<TabsScreen> {
               icon: const Icon(Icons.logout_sharp),
             ),
           ],
-          title: Text(activePageTitle),
+          title: Text(activePageTitle!),
         ),
         // drawer: MainDrawer(
         //   onSelectScreen: _setScreen,
@@ -85,7 +85,7 @@ class _TabsScreenState extends State<TabsScreen> {
                 Icons.list,
                 color: Theme.of(context).colorScheme.background,
               ),
-              label: cont.language["products"],
+              label: cont.language["products"]!,
               backgroundColor: Theme.of(context).colorScheme.background,
             ),
             BottomNavigationBarItem(
@@ -93,7 +93,7 @@ class _TabsScreenState extends State<TabsScreen> {
                 Icons.shopping_basket,
                 color: Theme.of(context).colorScheme.background,
               ),
-              label: cont.language["basket"],
+              label: cont.language["basket"]!,
               backgroundColor: Theme.of(context).colorScheme.background,
             ),
           ],

@@ -36,6 +36,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   value: st.isDarkThemeEnabled,
                   onChanged: (value) {
                     //  Provider.of<SettingsProvider>(context, listen: false)
+
                     st.setDarkThemeEnabled(value);
                   },
                 ),

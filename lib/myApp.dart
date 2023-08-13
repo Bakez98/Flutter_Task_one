@@ -23,6 +23,10 @@ class _MyAppState extends State<MyApp> {
           .setArabicLanguageSelected(false);
     });
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<SettingsProvider>().initMyController();
+    });
   }
 
   @override
@@ -32,7 +36,7 @@ class _MyAppState extends State<MyApp> {
       theme: Provider.of<SettingsProvider>(context).isDarkThemeEnabled
           ? dark
           : light,
-      home: TabsScreen(),
+      home: const TabsScreen(),
     );
   }
 }
