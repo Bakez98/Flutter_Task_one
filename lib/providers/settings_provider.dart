@@ -21,7 +21,10 @@ class SettingsProvider extends ChangeNotifier {
   bool isDefined = false;
 
   Future initMyController() async {
-    prefs = await SharedPreferences.getInstance();
+    if (!isDefined) {
+      prefs = await SharedPreferences.getInstance();
+      isDefined = true;
+    }
 
     checkIfExist();
   }
@@ -35,16 +38,14 @@ class SettingsProvider extends ChangeNotifier {
   void setArabicLanguageSelected(bool value) async {
     _isArabicLanguageSelected = value;
     prefs = await SharedPreferences.getInstance();
-    // prefs.setBool("isArabicLanguageSelected", value);
+    prefs.setBool("isArabicLanguageSelected", value);
     String langAsset = "en.json";
     if (value) {
       langAsset = "ar.json";
       my_current_locale = const Locale("ar");
-      prefs.setBool("_isArabicLanguageSelected", value);
     } else {
       langAsset = "en.json";
       my_current_locale = const Locale("en");
-      prefs.setBool("_isArabicLanguageSelected", value);
     }
     String xx = await rootBundle.loadString("assets/lang/${langAsset}");
     var jsonMap = json.decode(xx);
@@ -55,7 +56,7 @@ class SettingsProvider extends ChangeNotifier {
 
   void checkIfExist() async {
     print("inside check if Exist");
-    if (prefs.containsKey("isDarkThemeEnabled") ||
+    if (prefs.containsKey("isDarkThemeEnabled") &&
         prefs.containsKey("isArabicLanguageSelected")) {
       //implement if the value already exist which mean the app already opened before
       setAlreadyUsedTheme();
@@ -73,7 +74,7 @@ class SettingsProvider extends ChangeNotifier {
     myLang = arabiclang;
 
     await prefs.setBool("isDarkThemeEnabeled", myTheme!);
-    await prefs.setBool("_isArabicLanguageSelected", myLang!);
+    await prefs.setBool("isArabicLanguageSelected", myLang!);
 
     notifyListeners();
   }
@@ -81,8 +82,10 @@ class SettingsProvider extends ChangeNotifier {
   Future setAlreadyUsedTheme() async {
     print("inside Set allready used theme");
     _isDarkThemeEnabled = prefs.getBool("isDarkThemeEnabled")!;
-    _isArabicLanguageSelected = prefs.getBool("_isArabicLanguageSelected")!;
-
+    print("value of darkTheme : ${_isDarkThemeEnabled}");
+    _isArabicLanguageSelected = prefs.getBool("isArabicLanguageSelected")!;
+    print("value of arabicLanguageSelected : ${_isArabicLanguageSelected}");
+    setArabicLanguageSelected(_isArabicLanguageSelected);
     notifyListeners();
   }
 }
