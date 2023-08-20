@@ -1,6 +1,5 @@
-// ignore_for_file: no_logic_in_create_state
-
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:gallery_application/providers/settings_provider.dart';
 import 'package:gallery_application/screens/registration.dart';
 import 'package:gallery_application/providers/auth_provider.dart.dart';
@@ -9,11 +8,6 @@ import 'package:provider/provider.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
-
-// @override
-//   State<LogInScreen> createState() {
-//     return _LogInScreenState();
-//   }
 
   @override
   _LogInScreenState createState() => _LogInScreenState();
@@ -24,6 +18,42 @@ class _LogInScreenState extends State<LogInScreen> {
 
   final TextEditingController _emailAddressController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  Future<void> _showAlertDialogOnce() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool dialogShown = prefs.getBool('dialog_shown') ?? false;
+    // final deviceLang = Localizations.localeOf(context).languageCode;
+    // var cont = context.watch<SettingsProvider>();
+
+    if (!dialogShown) {
+      await prefs.setBool('dialog_shown', true); // Mark the dialog as shown
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Welcome!'),
+            content: const Text(
+                'Device Current Theme and Language are different from user preference!'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Return to Default'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Keep Current Settings'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
 
   void _login() {
     if (_formKey.currentState!.validate()) {
@@ -73,6 +103,12 @@ class _LogInScreenState extends State<LogInScreen> {
         );
       }
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _showAlertDialogOnce();
   }
 
   @override
@@ -160,7 +196,7 @@ class _LogInScreenState extends State<LogInScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(cont.language["login"].toString()),
-                              Icon(Icons.login_outlined),
+                              const Icon(Icons.login_outlined),
                             ],
                           ),
                         ),

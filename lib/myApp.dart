@@ -16,6 +16,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool firstOpen = true;
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -27,6 +28,8 @@ class _MyAppState extends State<MyApp> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<SettingsProvider>().initMyController();
     });
+
+    if (firstOpen) {}
   }
 
   @override
@@ -36,7 +39,7 @@ class _MyAppState extends State<MyApp> {
       theme: Provider.of<SettingsProvider>(context).isDarkThemeEnabled
           ? dark
           : light,
-      home: const TabsScreen(),
+      home: const LogInScreen(),
     );
   }
 }

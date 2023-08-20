@@ -58,7 +58,6 @@ class SettingsProvider extends ChangeNotifier {
     print("inside check if Exist");
     if (prefs.containsKey("isDarkThemeEnabled") &&
         prefs.containsKey("isArabicLanguageSelected")) {
-      //implement if the value already exist which mean the app already opened before
       setAlreadyUsedTheme();
     } else {
       setDefaultSettings();
@@ -66,7 +65,6 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   Future setDefaultSettings() async {
-    print("inside setDefault Settings");
     bool darktheme = false;
     bool arabiclang = false;
 
@@ -80,11 +78,8 @@ class SettingsProvider extends ChangeNotifier {
   }
 
   Future setAlreadyUsedTheme() async {
-    print("inside Set allready used theme");
     _isDarkThemeEnabled = prefs.getBool("isDarkThemeEnabled")!;
-    print("value of darkTheme : ${_isDarkThemeEnabled}");
     _isArabicLanguageSelected = prefs.getBool("isArabicLanguageSelected")!;
-    print("value of arabicLanguageSelected : ${_isArabicLanguageSelected}");
     setArabicLanguageSelected(_isArabicLanguageSelected);
     notifyListeners();
   }
